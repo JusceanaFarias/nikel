@@ -98,11 +98,15 @@ function checkLogged() {
               </div>
             </div>
       `
-      
-    }
 
     document.getElementById("cash-in-list").innerHTML = cashInHtml
   }
+
+  function função1()
+  {
+    alert("Eu sou um alert!");
+  }     
+}
 
  
  }

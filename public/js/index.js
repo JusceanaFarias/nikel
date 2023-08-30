@@ -46,11 +46,17 @@ document.getElementById("creat-form").addEventListener("submit", function(e){
         return;
     }
 
-    if(password.length) {
-        alert("Senhas diferetes!");
-        return false;
-    }else {
-        return true;
+    function validarsenha() {
+        senha = document.formulario.senha.value
+        confirma_senha = document
+        formulario.confirma_senha.value
+        if(senha == confirmar_senha) {
+     }
+         else{
+            alert("senhas diferentes");
+            return; false
+         }
+    
     }
 
     saveAccount ({
