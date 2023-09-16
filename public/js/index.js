@@ -1,4 +1,4 @@
-const mymodal = new bootstrap.Modal("#register-modal");
+const myModal = new bootstrap.Modal("#register-modal");
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
 
@@ -14,27 +14,27 @@ document.getElementById("login-form").addEventListener("submit", function(e) {
  const account = getAccount(email);
 
  if(!account) {
-    alert("opps! Verifique o usuário ou a senha.")
-    return;
-
-if(account.password !== password) {
     alert("opps! Verifique o usuário ou a senha.");
     return;
-}
+ }
 
-saveSession(email, checksession);
+ if(account) {
+    if(account.password !== password) {
+        alert("Opps! Verifique o usuário ou a senha.");
+        return;
+    }
 
+    saveSession(email, checksession);
 
     window.location.href = "home.html";
  }
 });
 
-document.getElementById("creat-form").addEventListener("submit", function(e){
+document.getElementById("creat-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
     const email = document.getElementById("email-creat-input").value;
     const password = document.getElementById("password-creat-input").value;
-    const pass = document.getElementById("pass-creat-input").value;
 
     if(email.length < 5) {
         alert("Preencha o campo com um email válido.");
@@ -46,28 +46,15 @@ document.getElementById("creat-form").addEventListener("submit", function(e){
         return;
     }
 
-    function validarsenha() {
-        senha = document.formulario.senha.value
-        confirma_senha = document
-        formulario.confirma_senha.value
-        if(senha == confirmar_senha) {
-     }
-         else{
-            alert("senhas diferentes");
-            return; false
-         }
-    
-    }
-
     saveAccount ({
         login: email,
         password: password,
         transactions: []
     });
 
-    mymodal.hide();
+    myModal.hide();
 
-   alert("Conta criada com sucesso");
+   alert("Conta criada com sucesso.");
 
 });
 
@@ -93,7 +80,8 @@ function saveSession(data, saveSession) {
     if(saveSession) {
         localStorage.setItem("session", data);
     }
-    sessionStorage.setItem("logged", data)
+    
+    sessionStorage.setItem("logged", data);
 }
 
 function getAccount(key) {
@@ -103,6 +91,6 @@ function getAccount(key) {
         return JSON.parse(account);
 }
 
-return
+return "";
 
 }

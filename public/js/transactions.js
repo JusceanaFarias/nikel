@@ -59,10 +59,10 @@ function checkLogged() {
  }
 
  function getTransactions() {
-    const transactions = data.transactions;
+    const getTransactions = data.transactions;
     let transactionsHTML = ``;
 
-    if(transactions.length){
+    if(transactions.length) {
         transactions.forEach((item) => {
          let type = "Entrada";
 
@@ -70,12 +70,12 @@ function checkLogged() {
             type = "Saída";
          }
 
-         transactionsHTML += `
+       transactionsHTML += `
          <tr>
-            <th scope="row">${item.date}</th>
-            <td>${item.value.toFixed(2)}</td>
-            <td>${type}</td>
-            <td>${item.description}</td>
+             <th scope="row">${item.date}</th>
+             <td>${item.value.topFixed(2)}</td>
+             <td>${type}</td>
+             <td>${item.description}</td>
          </tr>
          `
 
