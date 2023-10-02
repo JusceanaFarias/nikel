@@ -1,4 +1,6 @@
-const mymodal = new bootstrap.Modal("transaction-modal");
+const mymodal = new bootstrap.Modal(document.querySelector("#transaction-modal"));
+
+
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
 
@@ -6,85 +8,86 @@ let data = {
     transactions: []
 };
 
-document.getElementById("button-logout").addEventListener("click", logout);
 
 document.getElementById("transaction-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    
-  const value = parseFloat(document.getElementById("value-input").value);
-  const description = document.getElementById("description-input").value;
-  const date = document.getElementById("date-input").value;
-  const type = document.querySelector('input[name="type-input"]:checked').value;
+    const value = parseFloat(document.getElementById("value-input").value);
+    const description = document.getElementById("description-input").value;
+    const date = document.getElementById("date-input").value;
+    const type = document.querySelector('input[name="type-input"]:checked').value;
 
-  data.transactions.unshift({
-    value: value, type: type, description: description, date: Date,
-  });
+    data.transactions.unshift({
+        value: value, type: type, description: description, date: date,
+    });
 
-  saveData(data);
-  e.target.reset();
-  mymodal.hide();
+    saveData(data);
+    e.target.reset();
+    mymodal.hide();
 
-  getTransactions();
+    getTransactions();
 
-  alert("Lançamento adicionado com sucesso.");
+    alert("Lançamento adicionado com sucesso.");
 });
 
 checkLogged();
 
 function checkLogged() {
-    if(session) {
-     sessionStorage.setItem("logged", session);
-     logged = session;
+    if (session) {
+        sessionStorage.setItem("logged", session);
+        logged = session;
     }
- 
-    if(!logged) {
-     window.location.href = "index.html";
-     return;
+
+    if (!logged) {
+        window.location.href = "index.html";
+        return;
     }
 
     const dataUser = localStorage.getItem(logged);
-    if(dataUser) {
+    if (dataUser) {
         data = JSON.parse(dataUser);
     }
 
     getTransactions();
+}
 
- }
- function logout() {
+function logout() {
     sessionStorage.removeItem("logged");
     localStorage.removeItem("session");
 
     window.location.href = "index.html";
- }
+}
 
- function getTransactions() {
-    const getTransactions = data.transactions;
+function getTransactions() {
+    const transactions = data.transactions;
     let transactionsHTML = ``;
 
-    if(transactions.length) {
+    if (transactions.length) {
         transactions.forEach((item) => {
-         let type = "Entrada";
+            let type = "Entrada";
 
-         if(item.type === "2") {
-            type = "Saída";
-         }
+            if (item.type === "2") {
+                type = "Saída";
+            }
 
-       transactionsHTML += `
-         <tr>
-             <th scope="row">${item.date}</th>
-             <td>${item.value.topFixed(2)}</td>
-             <td>${type}</td>
-             <td>${item.description}</td>
-         </tr>
-         `
-
-        })
+            transactionsHTML += `
+                <tr>
+                    <th scope="row">${item.date}</th>
+                    <td>${item.value.toFixed(2)}</td>
+                    <td>${type}</td>
+                    <td>${item.description}</td>
+                </tr>
+            `;
+        });
     }
 
     document.getElementById("transactions-list").innerHTML = transactionsHTML;
- }
+}
 
- function saveData(data) {
-    localStorage.setItem(data.login, JSON.stringify(data));
- }
+function saveData(data) {
+    localStorage.setItem(logged, JSON.stringify(data));
+}
+
+document.getElementById("transactions-button").addEventListener("click", function () {
+    window.location.href = "transactions.html";
+});
