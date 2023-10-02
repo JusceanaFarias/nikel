@@ -6,7 +6,9 @@ let data = {
   login: logged,
   transactions: [],
 };
-
+document.getElementById("transactions-button").addEventListener("click", function () {
+  window.location.href = "transactions.html";
+});
 document.getElementById("transaction-form").addEventListener("submit", function(e) {
   e.preventDefault();
 
@@ -140,6 +142,7 @@ function getTotal() {
   });
 
   document.getElementById("total").innerHTML = `R$ ${total.toFixed(2)}`;
+ 
 }
 
 function saveData(data) {

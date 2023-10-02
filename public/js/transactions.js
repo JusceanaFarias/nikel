@@ -1,6 +1,6 @@
 const mymodal = new bootstrap.Modal(document.querySelector("#transaction-modal"));
 
-
+console.log("testee");
 let logged = sessionStorage.getItem("logged");
 const session = localStorage.getItem("session");
 
@@ -8,7 +8,7 @@ let data = {
     transactions: []
 };
 
-
+document.getElementById("transactions-logout").addEventListener("click",logout);
 document.getElementById("transaction-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -21,6 +21,18 @@ document.getElementById("transaction-form").addEventListener("submit", function(
         value: value, type: type, description: description, date: date,
     });
 
+
+    const controleSaldo = calcularSaldo(data.transactions)
+
+    if(type === "2" && controleSaldo - value  < 0){
+        const confirmaDebito = confirm("Atenção! Limite da conta .... ") 
+     if(!confirmaDebito){
+        return;
+     }
+    }
+
+
+
     saveData(data);
     e.target.reset();
     mymodal.hide();
@@ -31,6 +43,20 @@ document.getElementById("transaction-form").addEventListener("submit", function(
 });
 
 checkLogged();
+
+function calcularSaldo(transactions){
+    let total = 0;
+    transactions.forEach(item => {
+        if (item.type === "1") {
+            total += item.value; 
+        } else {
+            total -= item.value;
+        }
+    });
+
+    return total;
+    
+}
 
 function checkLogged() {
     if (session) {
@@ -87,6 +113,11 @@ function getTransactions() {
 function saveData(data) {
     localStorage.setItem(logged, JSON.stringify(data));
 }
+
+
+
+
+
 
 document.getElementById("transactions-button").addEventListener("click", function () {
     window.location.href = "transactions.html";
