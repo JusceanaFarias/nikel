@@ -24,6 +24,15 @@ document.getElementById("transaction-form").addEventListener("submit", function(
     date: date,
   });
 
+  const controleSaldo = getTotal()
+
+  if(type === "2" && controleSaldo - value  < 0){
+      const confirmaDebito = confirm("Atenção! Limite da conta .... ") 
+   if(!confirmaDebito){
+      return;
+   }
+  }
+
   saveData(data);
   e.target.reset();
   mymodal.hide();
@@ -141,7 +150,11 @@ function getTotal() {
     }
   });
 
+  
+
   document.getElementById("total").innerHTML = `R$ ${total.toFixed(2)}`;
+
+  return total; 
  
 }
 
